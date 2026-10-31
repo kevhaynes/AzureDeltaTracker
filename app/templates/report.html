@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Click-Ops Report · Azure Delta Tracker{% endblock %}
+{% block content %}
+{% include "_filters.html" %}
+
+<section class="stats" id="stats"></section>
+
+<section class="panel">
+  <h2>Click-Ops Leaderboard</h2>
+  <p class="muted small">Changes made by human user accounts (not service principals), ranked by number of changes.
+    The "Via" column shows which client was used where Azure reports it.</p>
+  <div class="leaderboard" id="leaderboard"></div>
+  <div class="table-wrap">
+    <table class="report">
+      <thead>
+        <tr>
+          <th>#</th><th>User</th><th class="num">Changes</th><th class="num">Create</th><th class="num">Update</th>
+          <th class="num">Delete</th><th class="num">Action</th><th class="num">Resources</th>
+          <th>Via</th><th>Subscriptions</th><th>Last change (UTC)</th>
+        </tr>
+      </thead>
+      <tbody id="report-body"></tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='common.js') }}"></script>
+<script src="{{ url_for('static', filename='report.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "_filters.html" %}
+
+<section class="stats" id="stats"></section>
+
+<section class="panel">
+  <div class="table-tools">
+    <input type="search" id="search" placeholder="Search resource, user, operation, subscription…">
+    <select id="filter-change-type">
+      <option value="">All change types</option>
+      <option>Create</option><option>Update</option><option>Delete</option><option>Action</option>
+    </select>
+    <select id="filter-caller-type">
+      <option value="">All callers</option>
+      <option>User</option><option>Service Principal</option><option>Terraform</option>
+    </select>
+    <span class="muted small" id="row-count"></span>
+  </div>
+  <div class="table-wrap">
+    <table class="changes">
+      <thead>
+        <tr>
+          <th>Time (UTC)</th><th>Resource</th><th>Change</th><th>Operation</th>
+          <th>Changed by</th><th>Via</th><th>Subscription / RG</th>
+        </tr>
+      </thead>
+      <tbody id="changes-body"></tbody>
+    </table>
+  </div>
+  <div class="pager" id="pager"></div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='common.js') }}"></script>
+<script src="{{ url_for('static', filename='changes.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,66 @@
+<section class="panel filters" id="filters">
+  <div class="filter-row">
+    <label>Scope
+      <select id="scope-type">
+        <option value="tenant">Whole tenant</option>
+        <option value="managementgroup">Management group</option>
+        <option value="subscription">Subscription</option>
+        <option value="resourcegroup">Resource group</option>
+      </select>
+    </label>
+    <label id="mg-wrap" hidden>Management group <select id="scope-mg"></select></label>
+    <label id="sub-wrap" hidden>Subscription <select id="scope-sub"></select></label>
+    <label id="rg-wrap" hidden>Resource group <select id="scope-rg"></select></label>
+
+    <label class="toggle" title="Hide changes made by the Terraform Enterprise service principals">
+      <input type="checkbox" id="hide-tf">
+      <span class="switch"></span>
+      Hide Terraform Enterprise
+    </label>
+    {% if page == 'report' %}
+    <label>Top <input type="number" id="top-n" min="1" max="500" class="input-narrow"></label>
+    <label class="toggle" title="Only count changes made through the Azure Portal (CLI / PowerShell excluded)">
+      <input type="checkbox" id="portal-only">
+      <span class="switch"></span>
+      Portal only
+    </label>
+    {% endif %}
+  </div>
+
+  <div class="time-range">
+    <div class="time-labels">
+      <span>From <strong id="time-start-label"></strong></span>
+      <span class="presets">
+        <button type="button" class="chip" data-preset="24">24h</button>
+        <button type="button" class="chip" data-preset="168">7d</button>
+        <button type="button" class="chip" data-preset="336">14d</button>
+        <button type="button" class="chip" data-preset="720">30d</button>
+        <button type="button" class="chip" data-preset="all">All</button>
+      </span>
+      <span>To <strong id="time-end-label"></strong></span>
+    </div>
+    <div class="dual-range">
+      <div class="track"><div class="track-fill" id="track-fill"></div><div class="track-arg" id="track-arg" title="Before/after values available (Resource Graph, last 14 days)"></div></div>
+      <input type="range" id="time-start" min="0" step="1" aria-label="Start time">
+      <input type="range" id="time-end" min="0" step="1" aria-label="End time">
+    </div>
+  </div>
+
+  <details class="sub-exclusions">
+    <summary>Subscription filter <span class="badge" id="excluded-count">0 excluded</span></summary>
+    <div class="sub-actions">
+      <button type="button" class="btn btn-small" id="excl-defaults">Reset to defaults</button>
+      <button type="button" class="btn btn-small" id="excl-none">Include all</button>
+      <span class="muted small">Default exclusions: <code id="default-patterns"></code></span>
+    </div>
+    <div class="sub-list" id="sub-list"></div>
+  </details>
+
+  <div class="filter-row actions">
+    <button type="button" class="btn btn-primary" id="apply">Apply</button>
+    <button type="button" class="btn" id="refresh" title="Clear the server cache and reload from Azure">Refresh from Azure</button>
+    <a class="btn" id="export-csv" href="#">Export CSV</a>
+    <span class="status" id="status"></span>
+  </div>
+</section>
+<div id="errors"></div>
